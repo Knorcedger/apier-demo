@@ -1,0 +1,23 @@
+{
+  "name": "test-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier index.js & node-inspector"
+  },
+  "keywords": [],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-google": "^0.3.0",
+    "node-inspector": "^0.12.5",
+    "nodemon": "^1.8.1"
+  },
+  "dependencies": {
+    "apier": "^1.0.0",
+    "nconf": "^0.8.2",
+    "router": "^1.1.3"
+  }
+}
