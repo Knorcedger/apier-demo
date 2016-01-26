@@ -1,6 +1,6 @@
 
 module.exports = function(apier) {
-	apier.endpoint('/users', function(req, res) {
+	apier.endpoint(['get', 'post'], '/users', function(req, res) {
 		this.send('The users');
 	});
 };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier index.js & node-inspector"
+    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/apier-dataparser index.js & node-inspector"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -16,7 +16,6 @@
     "nodemon": "^1.8.1"
   },
   "dependencies": {
-    "apier": "^1.0.0",
     "nconf": "^0.8.2"
   }
 }
