@@ -22,11 +22,23 @@ test.serial('api:NOT_FOUND', async t => {
 	t.plan(3);
 
 	const res = await request
-	.post('/users2');
+		.post('/users2')
+		.send({secret: '2Fx64jQ54asz8MD92MOVBOWS'});
 
 	t.is(res.status, 200);
 	t.is(res.body.data, null);
 	t.is(res.body.meta.statusCode, 'NOT_FOUND');
+});
+
+test.serial('api:NO_APIKEY', async t => {
+	t.plan(3);
+
+	const res = await request
+		.post('/users');
+
+	t.is(res.status, 200);
+	t.is(res.body.data, null);
+	t.is(res.body.meta.statusCode, 'NO_APIKEY');
 });
 
 test.serial('users:Success', async t => {
@@ -34,7 +46,7 @@ test.serial('users:Success', async t => {
 
 	const res = await request
 		.post('/users')
-		.send({email: 'ava@rocks.com', password: '123123'});
+		.send({secret: '2Fx64jQ54asz8MD92MOVBOWS'});
 
 	t.is(res.status, 200);
 	t.is(res.body.data, 'The users');

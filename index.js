@@ -8,7 +8,7 @@ nconf.argv()
 	.env()
 	.file({file: 'config.json'});
 
-var app = apier();
+var app = apier(nconf);
 require('./v1/users/all.js')(app);
 
 var port = nconf.get('port');
