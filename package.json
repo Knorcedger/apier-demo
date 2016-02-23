@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "start": "nodemon --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/apier-accessverifier index.js",
-    "debug": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier index.js & node-inspector --no-preload"
+    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-accessverifier index.js",
+    "debug": "node-inspector --no-preload"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -20,12 +20,14 @@
     "supertest-as-promised": "^2.0.2"
   },
   "dependencies": {
+    "mongoose": "^4.4.4",
     "nconf": "^0.8.2"
   },
   "ava": {
     "files": [
       "test/test.js"
     ],
+    "serial": true,
     "verbose": true
   }
 }

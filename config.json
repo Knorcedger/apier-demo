@@ -22,9 +22,8 @@
 		}]
 	},
 	"databases": {
-		"local": "mongodb://localhost/prometheus",
-		"development": "",
-		"production": ""
+		"local": "mongodb://localhost/test",
+		"production": "mongodb://test:test1234@ds055915.mongolab.com:55915/test-be"
 	},
 	"users": {
 		"types": ["admin", "manager", "member"]
