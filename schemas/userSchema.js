@@ -50,4 +50,10 @@ userSchema.methods.findByIdAndUpdate = function(req, res, id, update,
 		'User', id, update, options, populations);
 };
 
+userSchema.methods.findOneAndUpdate = function(req, res, query, update,
+	options, populations) {
+	return schemaExtender.findOneAndUpdate(req, res, mongoose, userSchema,
+		'User', query, update, options, populations);
+};
+
 mongoose.model('User', userSchema);

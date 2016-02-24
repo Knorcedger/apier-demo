@@ -3,7 +3,7 @@ var User = require('mongoose').model('User');
 var reqlog = require('reqlog');
 
 module.exports = function(app) {
-	app.endpoint(['get', 'post'], '/users', function(req, res) {
+	app.endpoint(['get', 'post'], '/users/:id/update', function(req, res) {
 		main(req, res, this);
 	});
 };
@@ -16,10 +16,17 @@ module.exports = function(app) {
  * @param  {object} self Use self.send to send back data
  */
 function main(req, res, self) {
-	reqlog.info('user.all');
+	reqlog.info('user.update');
 	var user = new User();
 
-	user.find(req, res, {})
+	var update = {};
+	if (req.requestData.email) {
+		update.email = req.requestData.email;
+	}
+	if (req.requestData.username) {
+		update.username = req.requestData.username;
+	}
+	user.findByIdAndUpdate(req, res, req.params.id, update)
 		.then(function(result) {
 			self.send(result);
 		});

@@ -31,6 +31,10 @@ var app = apier(nconf);
 require('./v1/users/all.js')(app);
 require('./v1/users/add.js')(app);
 require('./v1/users/search.js')(app);
+require('./v1/users/updateAll.js')(app);
+require('./v1/users/edit.js')(app);
+require('./v1/users/update.js')(app);
+require('./v1/users/delete.js')(app);
 require('./v1/users/get.js')(app);
 
 var port = nconf.get('port');

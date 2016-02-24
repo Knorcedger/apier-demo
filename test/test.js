@@ -54,16 +54,6 @@ test('api:INVALID_APIKEY', async t => {
 	t.is(res.body.meta.statusCode, 'INVALID_APIKEY');
 });
 
-test('users:Success', async t => {
-	t.plan(2);
-
-	const res = await request
-		.post('/users')
-		.send({secret: secret});
-
-	t.is(res.status, 200);
-	t.is(res.body.data, 'The users');
-});
 
 var random = Math.random() * (10000 - 1) + 1;
 var userEmail = 'knorcedger' + random + '@gmail.com';
@@ -105,6 +95,19 @@ test('users:Add-Duplicate-Email', async t => {
 	t.is(res.status, 200);
 	t.is(res.body.data, null);
 	t.is(res.body.meta.statusCode, 'INTERNAL_SERVER_ERROR');
+});
+
+test('users:Get-all', async t => {
+	t.plan(4);
+
+	const res = await request
+	.post('/users')
+	.send({secret: secret});
+
+	t.is(res.status, 200);
+	t.true(Array.isArray(res.body.data));
+	t.is(res.body.data[0].username, userUsername);
+	t.is(res.body.data[0].email, userEmail);
 });
 
 test('users:Get', async t => {
@@ -151,5 +154,102 @@ test('users:Search-by-username', async t => {
 	t.is(res.status, 200);
 	t.true(Array.isArray(res.body.data));
 	t.is(res.body.data[0].username, userUsername);
+	t.is(res.body.meta.statusCode, 'OK');
+});
+
+test('users:Update-username', async t => {
+	t.plan(3);
+
+	const res = await request
+		.post('/users/' + userId + '/update')
+		.send({
+			secret: secret,
+			username: userUsername + 2
+		});
+
+	const res2 = await request
+		.post('/users/' + userId)
+		.send({
+			secret: secret
+		});
+
+	userUsername = userUsername + 2;
+
+	t.is(res2.status, 200);
+	t.is(res2.body.data.username, userUsername);
+	t.is(res2.body.meta.statusCode, 'OK');
+});
+
+test('users:Edit-email', async t => {
+	t.plan(4);
+
+	userEmail = 'knorcedger@gmail.com';
+
+	const res = await request
+		.post('/users/edit')
+		.send({
+			secret: secret,
+			query: {
+				username: userUsername
+			},
+			update: {
+				email: userEmail
+			}
+		});
+
+	const res2 = await request
+		.post('/users/' + userId)
+		.send({
+			secret: secret
+		});
+
+
+	t.is(res2.status, 200);
+	t.is(res2.body.data.username, userUsername);
+	t.is(res2.body.data.email, userEmail);
+	t.is(res2.body.meta.statusCode, 'OK');
+});
+
+test('users:Update-username-with-update', async t => {
+	t.plan(4);
+
+	userEmail = 'knorcedger2@gmail.com';
+
+	const res = await request
+		.post('/users/edit')
+		.send({
+			secret: secret,
+			query: {
+				username: userUsername
+			},
+			update: {
+				email: userEmail
+			}
+		});
+
+	const res2 = await request
+		.post('/users/' + userId)
+		.send({
+			secret: secret
+		});
+
+
+	t.is(res2.status, 200);
+	t.is(res2.body.data.username, userUsername);
+	t.is(res2.body.data.email, userEmail);
+	t.is(res2.body.meta.statusCode, 'OK');
+});
+
+test('users:Delete-user', async t => {
+	t.plan(3);
+
+	const res = await request
+		.post('/users/' + userId + '/delete')
+		.send({
+			secret: secret
+		});
+
+	t.is(res.status, 200);
+	t.is(res.body.data.username, userUsername);
 	t.is(res.body.meta.statusCode, 'OK');
 });
