@@ -20,7 +20,7 @@ function main(req, res, self) {
 	var user = new User();
 
 	user.findOneAndUpdate(req, res, req.requestData.query,
-		req.requestData.update)
+		{$set: req.requestData.update}, {new: true})
 		.then(function(result) {
 			self.send(result);
 		});

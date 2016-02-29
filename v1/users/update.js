@@ -26,7 +26,7 @@ function main(req, res, self) {
 	if (req.requestData.username) {
 		update.username = req.requestData.username;
 	}
-	user.findByIdAndUpdate(req, res, req.params.id, update)
+	user.findByIdAndUpdate(req, res, req.params.id, update, {new: true})
 		.then(function(result) {
 			self.send(result);
 		});
