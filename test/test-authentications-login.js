@@ -32,3 +32,27 @@ test('login', async t => {
 		email: user.email
 	});
 });
+
+test('username-invalid-length', async t => {
+	const res = await info.request
+		.post('/authentications/login')
+		.send({
+			secret: info.secret,
+			username: 'abc',
+			password: '1234'
+		});
+
+	helpers.checkFail(t, res, 'username.INVALID_LENGTH');
+});
+
+test('password-invalid-length', async t => {
+	const res = await info.request
+		.post('/authentications/login')
+		.send({
+			secret: info.secret,
+			username: 'abcd',
+			password: '123'
+		});
+
+	helpers.checkFail(t, res, 'password.INVALID_LENGTH');
+});

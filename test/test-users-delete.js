@@ -6,12 +6,16 @@ var loginUser = require('./fixtures/login-user');
 var helpers = require('./helpers/helpers');
 
 var user;
+var user2;
+var user3;
 var token;
 
 test.before('setup', async t => {
 	try {
 		var done = await setup();
 		user = await addUser('admin');
+		user2 = await addUser('member');
+		user3 = await addUser('member');
 		token = await loginUser(user._id);
 		t.pass();
 	} catch(error) {
@@ -21,7 +25,7 @@ test.before('setup', async t => {
 
 test('delete', async t => {
 	const res = await info.request
-		.post('/users/' + user._id + '/delete')
+		.post('/users/' + user2._id + '/delete')
 		.send({
 			secret: info.secret,
 			token: token
@@ -29,8 +33,30 @@ test('delete', async t => {
 
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data, {
-		username: user.username,
-		email: user.email,
-		type: user.type
+		username: user2.username,
+		email: user2.email,
+		type: user2.type
 	});
+});
+
+test('id-invalid-length', async t => {
+	const res = await info.request
+		.post('/users/' + '1234' + '/delete')
+		.send({
+			secret: info.secret,
+			token: token
+		});
+
+	helpers.checkFail(t, res, 'id.INVALID_LENGTH');
+});
+
+test('id-not-exist', async t => {
+	const res = await info.request
+		.post('/users/' + '123456789012345678901234' + '/delete')
+		.send({
+			secret: info.secret,
+			token: token
+		});
+
+	helpers.checkFail(t, res, 'id.NOT_EXIST');
 });

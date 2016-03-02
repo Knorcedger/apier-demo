@@ -5,17 +5,53 @@ require('../../schemas/sessionSchema');
 var Session = db.mongoose.model('Session');
 var reqlog = require('reqlog');
 var crypto = require('crypto');
+var validationsRunner = require('apier-validationsrunner');
 
 module.exports = function(app) {
 	app.endpoint({
 		methods: ['get', 'post'],
 		url: '/authentications/login',
 		permissions: ['null'],
+		middlewares: [validate],
 		callback: function(req, res) {
 			main(req, res, this);
 		}
 	});
 };
+
+/**
+ * The endpoint validations middleware
+ * @method validate
+ * @param  {object}   req  The request object
+ * @param  {object}   res  The response object
+ * @param  {Function} next The next function
+ */
+function validate(req, res, next) {
+	var validations = {
+		username: {
+			INVALID_LENGTH: function(req, resolve) {
+				var username = req.requestData.username;
+				if (username && username.length >= 4) {
+					resolve(true);
+				} else {
+					resolve(false);
+				}
+			}
+		},
+		password: {
+			INVALID_LENGTH: function(req, resolve) {
+				var password = req.requestData.password;
+				if (password && password.length >= 4) {
+					resolve(true);
+				} else {
+					resolve(false);
+				}
+			}
+		}
+	};
+
+	validationsRunner(req, res, next, validations);
+}
 
 /**
  * The main endpoint function
