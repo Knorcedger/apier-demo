@@ -62,3 +62,61 @@ test('edit-username', async t => {
 		type: user.type
 	});
 });
+
+test('query-empty', async t => {
+	const res = await info.request
+		.post('/users/edit')
+		.send({
+			secret: info.secret,
+			token: token,
+			update: {
+				username: 'test'
+			}
+		});
+
+	helpers.checkFail(t, res, 'query.EMPTY');
+});
+
+test('query-bad-format', async t => {
+	const res = await info.request
+		.post('/users/edit')
+		.send({
+			secret: info.secret,
+			token: token,
+			query: 'test',
+			update: {
+				username: 'test'
+			}
+		});
+
+	helpers.checkFail(t, res, 'query.BAD_FORMAT');
+});
+
+test('update-empty', async t => {
+	const res = await info.request
+		.post('/users/edit')
+		.send({
+			secret: info.secret,
+			token: token,
+			query: {
+				email: 'test@example.com'
+			}
+		});
+
+	helpers.checkFail(t, res, 'update.EMPTY');
+});
+
+test('update-bad-format', async t => {
+	const res = await info.request
+		.post('/users/edit')
+		.send({
+			secret: info.secret,
+			token: token,
+			query: {
+				email: 'test@example.com'
+			},
+			update: true
+		});
+
+	helpers.checkFail(t, res, 'update.BAD_FORMAT');
+});
