@@ -1,10 +1,16 @@
 require('../../schemas/userSchema');
-var User = require('mongoose').model('User');
+var db = require('apier-database');
+var User = db.mongoose.model('User');
 var reqlog = require('reqlog');
 
 module.exports = function(app) {
-	app.endpoint(['get', 'post'], '/users/:id', function(req, res) {
-		main(req, res, this);
+	app.endpoint({
+		methods: ['get', 'post'],
+		url: '/users/:id',
+		permissions: ['member'],
+		callback: function(req, res) {
+			main(req, res, this);
+		}
 	});
 };
 

@@ -2,14 +2,17 @@ import test from 'ava';
 import setup from './fixtures/setup';
 var info = require('./fixtures/info');
 var addUser = require('./fixtures/add-user');
+var loginUser = require('./fixtures/login-user');
 var helpers = require('./helpers/helpers');
 
-var admin;
+var user;
+var token;
 
 test.before('setup', async t => {
 	try {
 		var done = await setup();
-		admin = await addUser('admin');
+		user = await addUser('admin');
+		token = await loginUser(user._id);
 		t.pass();
 	} catch(error) {
 		t.fail(error);
@@ -18,15 +21,16 @@ test.before('setup', async t => {
 
 test('delete', async t => {
 	const res = await info.request
-		.post('/users/' + admin._id + '/delete')
+		.post('/users/' + user._id + '/delete')
 		.send({
-			secret: info.secret
+			secret: info.secret,
+			token: token
 		});
 
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data, {
-		username: admin.username,
-		email: admin.email,
-		type: admin.type
+		username: user.username,
+		email: user.email,
+		type: user.type
 	});
 });

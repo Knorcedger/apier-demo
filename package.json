@@ -1,11 +1,11 @@
 {
-  "name": "test-be",
+  "name": "apier-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "ava",
-    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-accessverifier index.js",
+    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-permissioner index.js",
     "debug": "node-inspector --no-preload"
   },
   "keywords": [],
@@ -20,9 +20,8 @@
     "supertest-as-promised": "^2.0.2"
   },
   "dependencies": {
-    "apier-database": "^1.0.1",
     "crypto": "0.0.3",
-    "mongoose": "^4.4.4",
+    "mongoose": "^4.4.5",
     "nconf": "^0.8.2"
   },
   "ava": {

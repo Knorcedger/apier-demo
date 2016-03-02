@@ -1,13 +1,19 @@
 require('../../schemas/userSchema');
-var User = require('mongoose').model('User');
+var db = require('apier-database');
+var User = db.mongoose.model('User');
 require('../../schemas/sessionSchema');
-var Session = require('mongoose').model('Session');
+var Session = db.mongoose.model('Session');
 var reqlog = require('reqlog');
 var crypto = require('crypto');
 
 module.exports = function(app) {
-	app.endpoint(['get', 'post'], '/authentications/login', function(req, res) {
-		main(req, res, this);
+	app.endpoint({
+		methods: ['get', 'post'],
+		url: '/authentications/login',
+		permissions: ['null'],
+		callback: function(req, res) {
+			main(req, res, this);
+		}
 	});
 };
 

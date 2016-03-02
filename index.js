@@ -2,22 +2,22 @@ var http = require('http');
 var reqlog = require('reqlog');
 var nconf = require('nconf');
 var apier = require('apier');
-var db = require('apier-database');
-var schemaExtender = require('mongoose-schema-extender');
 
 reqlog.init(false);
 nconf.argv()
 	.env()
 	.file({file: 'config.json'});
 
-schemaExtender.handleError = true;
-
 // find the database url
 // select set db, or local
 reqlog.info('DB used', process.env.DB || 'production');
-db.connect(nconf.get('databases')[process.env.DB || 'production']);
 
-var app = apier(nconf);
+var app = apier({
+	mongoUrl: nconf.get('databases')[process.env.DB || 'production'],
+	access: nconf.get('access'),
+	handleErrors: true,
+	schemas: [require('./schemas/sessionSchema')]
+});
 
 // authentications
 require('./v1/authentications/login.js')(app);

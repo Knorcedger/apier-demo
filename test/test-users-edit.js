@@ -2,14 +2,17 @@ import test from 'ava';
 import setup from './fixtures/setup';
 var info = require('./fixtures/info');
 var addUser = require('./fixtures/add-user');
+var loginUser = require('./fixtures/login-user');
 var helpers = require('./helpers/helpers');
 
-var admin;
+var user;
+var token;
 
 test.before('setup', async t => {
 	try {
 		var done = await setup();
-		admin = await addUser('admin');
+		user = await addUser('admin');
+		token = await loginUser(user._id);
 		t.pass();
 	} catch(error) {
 		t.fail(error);
@@ -21,8 +24,9 @@ test('edit-email', async t => {
 		.post('/users/edit')
 		.send({
 			secret: info.secret,
+			token: token,
 			query: {
-				username: admin.username
+				username: user.username
 			},
 			update: {
 				email: 'test@example.com'
@@ -31,9 +35,9 @@ test('edit-email', async t => {
 
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data, {
-		username: admin.username,
+		username: user.username,
 		email: 'test@example.com',
-		type: admin.type
+		type: user.type
 	});
 });
 
@@ -42,6 +46,7 @@ test('edit-username', async t => {
 		.post('/users/edit')
 		.send({
 			secret: info.secret,
+			token: token,
 			query: {
 				email: 'test@example.com'
 			},
@@ -54,6 +59,6 @@ test('edit-username', async t => {
 	helpers.isUser(t, res.body.data, {
 		username: 'test',
 		email: 'test@example.com',
-		type: admin.type
+		type: user.type
 	});
 });
