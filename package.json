@@ -22,7 +22,8 @@
   "dependencies": {
     "crypto": "0.0.3",
     "mongoose": "^4.4.5",
-    "nconf": "^0.8.2"
+    "nconf": "^0.8.2",
+    "validator": "^5.1.0"
   },
   "ava": {
     "files": [

@@ -52,3 +52,13 @@ test('search-by-username', async t => {
 		email: member.email
 	});
 });
+
+test('no-username-no-email', async t => {
+	const res = await info.request
+		.post('/users/search')
+		.send({
+			secret: info.secret
+		});
+
+	helpers.checkFail(t, res, 'searchTerms.INVALID');
+});
