@@ -26,7 +26,6 @@ test('register', async t => {
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data, {
 		username: 'member',
-		email: 'member@example.com',
-		type: 'member'
+		email: 'member@example.com'
 	});
 });

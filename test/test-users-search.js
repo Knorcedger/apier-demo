@@ -2,16 +2,19 @@ import test from 'ava';
 import setup from './fixtures/setup';
 var info = require('./fixtures/info');
 var addUser = require('./fixtures/add-user');
+var loginUser = require('./fixtures/login-user');
 var helpers = require('./helpers/helpers');
 
 var admin;
 var member;
+var token;
 
 test.before('setup', async t => {
 	try {
 		var done = await setup();
 		admin = await addUser('admin');
 		member = await addUser('member');
+		token = await loginUser(admin._id);
 		t.pass();
 	} catch(error) {
 		t.fail(error);
@@ -23,6 +26,7 @@ test('search-by-email', async t => {
 		.post('/users/search')
 		.send({
 			secret: info.secret,
+			token: token,
 			email: admin.email
 		});
 
@@ -45,7 +49,6 @@ test('search-by-username', async t => {
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data[0], {
 		username: member.username,
-		email: member.email,
-		type: member.type
+		email: member.email
 	});
 });

@@ -20,13 +20,16 @@ userSchema.statics.permissions = function() {
 	return {
 		_id: ['null'],
 		username: ['null'],
-		email: ['null']
+		password: [],
+		email: ['null'],
+		type: ['admin'],
+		__v: []
 	};
 };
 
 userSchema.methods.create = function(req, res, save, populations) {
-	return schemaExtender.create(req, res, db.mongoose, userSchema, 'User', save,
-		populations);
+	return schemaExtender.create(req, res, db.mongoose, userSchema, 'User',
+		save, populations);
 };
 
 userSchema.methods.findOne = function(req, res, query, populations) {

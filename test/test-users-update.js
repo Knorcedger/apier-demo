@@ -31,7 +31,6 @@ test('update-username', async t => {
 	helpers.checkSuccess(t, res);
 	helpers.isUser(t, res.body.data, {
 		username: 'user2',
-		email: user.email,
-		type: user.type
+		email: user.email
 	});
 });

@@ -29,7 +29,6 @@ test('login', async t => {
 	t.ok(res.body.data.token);
 	helpers.isUser(t, res.body.data, {
 		username: user.username,
-		email: user.email,
-		type: user.type
+		email: user.email
 	});
 });
