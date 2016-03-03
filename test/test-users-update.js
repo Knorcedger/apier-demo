@@ -34,3 +34,39 @@ test('update-username', async t => {
 		email: user.email
 	});
 });
+
+
+test('id-invalid-length', async t => {
+	const res = await info.request
+		.post('/users/' + '1234' + '/update')
+		.send({
+			secret: info.secret,
+			token: token,
+			email: 'testme@example.com'
+		});
+
+	helpers.checkFail(t, res, 'id.INVALID_LENGTH');
+});
+
+test('id-not-exist', async t => {
+	const res = await info.request
+		.post('/users/' + '123456789012345678901234' + '/update')
+		.send({
+			secret: info.secret,
+			token: token,
+			username: 'noname'
+		});
+
+	helpers.checkFail(t, res, 'id.NOT_EXIST');
+});
+
+test('no-username-no-email', async t => {
+	const res = await info.request
+		.post('/users/' + user._id + '/update')
+		.send({
+			secret: info.secret,
+			token: token
+		});
+
+	helpers.checkFail(t, res, 'updateParams.INVALID');
+});
