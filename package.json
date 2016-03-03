@@ -1,15 +1,21 @@
 {
   "name": "apier-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "ava",
-    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-permissioner index.js",
-    "debug": "node-inspector --no-preload"
+  "ava": {
+    "files": [
+      "test"
+    ],
+    "serial": true,
+    "verbose": true
   },
-  "keywords": [],
-  "license": "Apache-2.0",
+  "dependencies": {
+    "apier": "^1.0.1",
+    "crypto": "0.0.3",
+    "mongoose": "^4.4.5",
+    "nconf": "^0.8.2",
+    "reqlog": "^1.1.3",
+    "validator": "^5.1.0"
+  },
   "devDependencies": {
     "ava": "^0.12.0",
     "eslint": "^1.10.3",
@@ -19,17 +25,12 @@
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2"
   },
-  "dependencies": {
-    "crypto": "0.0.3",
-    "mongoose": "^4.4.5",
-    "nconf": "^0.8.2",
-    "validator": "^5.1.0"
-  },
-  "ava": {
-    "files": [
-      "test"
-    ],
-    "serial": true,
-    "verbose": true
+  "keywords": [],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "scripts": {
+    "debug": "node-inspector --no-preload",
+    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-permissioner index.js",
+    "test": "ava"
   }
 }
