@@ -33,3 +33,25 @@ test('get', async t => {
 		email: user.email
 	});
 });
+
+test('id-invalid-length', async t => {
+	const res = await info.request
+		.post('/users/' + '1234')
+		.send({
+			secret: info.secret,
+			token: token
+		});
+
+	helpers.checkFail(t, res, 'id.INVALID_LENGTH');
+});
+
+test('id-not-exist', async t => {
+	const res = await info.request
+		.post('/users/' + '123456789012345678901234')
+		.send({
+			secret: info.secret,
+			token: token
+		});
+
+	helpers.checkFail(t, res, 'id.NOT_EXIST');
+});
