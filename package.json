@@ -1,6 +1,8 @@
 {
   "name": "apier-demo",
+  "description": "A demo app for apier",
   "version": "1.0.0",
+  "author": "Knorcedger",
   "ava": {
     "files": [
       "test"
@@ -8,6 +10,7 @@
     "serial": true,
     "verbose": true
   },
+  "bugs": "https://github.com/Knorcedger/apier-demo/issues",
   "dependencies": {
     "apier": "^1.0.1",
     "crypto": "0.0.3",
@@ -25,12 +28,16 @@
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2"
   },
+  "homepage": "https://github.com/Knorcedger/apier-demo",
   "keywords": [],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "main": "index.js",
+  "repository": {
+    "url": "https://github.com/Knorcedger/apier-demo"
+  },
   "scripts": {
     "debug": "node-inspector --no-preload",
-    "start": "nodemon --debug --watch ./ --watch /home/knorcedger/dev/apier --watch /home/knorcedger/dev/mongoose-schema-extender --watch /home/knorcedger/dev/apier-permissioner index.js",
+    "start": "nodemon --debug --watch ./ index.js",
     "test": "ava"
   }
 }

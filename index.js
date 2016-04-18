@@ -15,8 +15,7 @@ reqlog.info('DB used', process.env.DB || 'production');
 var app = apier({
 	mongoUrl: nconf.get('databases')[process.env.DB || 'production'],
 	access: nconf.get('access'),
-	handleErrors: true,
-	schemas: [require('./schemas/sessionSchema')]
+	handleErrors: true
 });
 
 // authentications
