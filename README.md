@@ -4,6 +4,8 @@ A demo app for apier
 
 ## Installation and Run
 
+Clone or download with repo and execute the commands below
+
 ```sh
 npm install
 npm start
