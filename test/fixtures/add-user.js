@@ -42,7 +42,7 @@ module.exports = function(userType) {
  * @return {object}  The member object
  */
 function getMember() {
-	var random = Math.random((10000 - 1) / 1);
+	var random = parseInt(Math.random() * (10000 - 1) + 1, 10);
 	return {
 		username: 'member' + random,
 		password: '1234',
