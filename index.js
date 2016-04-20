@@ -31,7 +31,7 @@ require('./v1/users/update.js')(app);
 require('./v1/users/delete.js')(app);
 require('./v1/users/get.js')(app);
 
-var port = nconf.get('port');
+var port = process.env.PORT || nconf.get('port');
 http.createServer(app).listen(port, function() {
 	reqlog.warn('server.start.success', 'On port ' + port);
 });
